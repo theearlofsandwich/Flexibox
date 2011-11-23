@@ -1,0 +1,164 @@
+/* Overridable variables */
+$fbox-grid-columns: 24 !default;
+$fbox-container-size: 950px !default;
+$fbox-grid-margin: 10px !default;
+
+/* Consts */
+$fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-columns;
+
+
+@mixin fbox-container($width: $fbox-container-size) {
+  width: $width;
+  margin: 0 auto;
+  padding: $fbox-column-width;
+}
+
+.fbox-column {
+  float: left;
+  /* Apparently this helps in IE */
+  display: inline;
+  overflow-x: hidden;
+}
+
+@function fbox-width-pad( $pad ){
+  $padlength: length($pad);
+  $padwidth: 0;
+
+  @if $padlength == 1 {
+    @return nth($pad, 1) * 2;
+  } @else if $padlength == 2 {
+    @return nth($pad, 2) * 2;
+  } @else if $padlength == 3 {
+    @return nth($pad, 2) * 2;
+  } @else {
+    @return nth($pad, 2) + nth($pad, 4);
+  }
+}
+
+@function fbox-height-pad( $pad ){
+  $padlength: length($pad);
+  $padheight: 0;
+
+  @if $padlength == 1 {
+    @return nth($pad, 1) * 2;
+  } @else if $padlength == 2 {
+    @return nth($pad, 1) * 2;
+  } @else if $padlength == 3 {
+    @return nth($pad, 1) + nth($pad, 3);
+  } @else {
+    @return nth($pad, 1) + nth($pad, 3);
+  }
+}
+
+
+@mixin fbox-column( $size: 0, $padding: -1, $margin-right: -1, $margin-left: -1, $margin-sides: -1, $width: -1, $height: -1, $margin: -1, $grid: false, $last: false, $image: '' ) {
+  @extend .fbox-column;
+  /*Work out left margin
+  $margin-left-set: false;
+  
+  @if $margin-left != -1 {
+    $margin-left-set: true;
+  } @else {
+    @if $margin-sides != -1 {
+      $margin-left-set: true;
+      @if length($margin-sides) == 1 {
+        $margin-left: $margin-sides;
+      } @else {
+        $margin-left: nth($margin-sides,1);
+      }
+    } @else {
+      @if $margin != -1 {
+        $margin-left-set: true;
+        @if length($margin) == 1 {
+          $margin-left: $margin;
+        } @else if length($margin) == 2 or length($margin) == 3{
+          $margin-left: nth($margin, 2);
+        } @else {
+          $margin-left: nth($margin, 4);
+        }
+      }
+    }
+  }
+  
+  $margin-right-set: false;
+   
+  @if $margin-right != -1 {
+    $margin-right-set: true;
+  } @else {
+    @if $margin-sides != -1 {
+      $margin-right-set: true;
+      @if length($margin-sides) == 1 {
+        $margin-right: $margin-sides;
+      } @else {
+        $margin-right: nth($margin-sides,2);
+      }
+    } @else {
+      @if $margin != -1 {
+        $margin-right-set: true;
+        @if length($margin) == 1 {
+          $margin-right: $margin;
+        } @else if length($margin) > 1 {
+          $margin-right: nth($margin, 2);
+        }
+      }
+    }
+  }  
+  */
+  
+  // Work out right margin
+  
+  @if $image != '' {
+    $width: image-width($image);
+    $height: image-height($image);
+    background: image-url( $image ) no-repeat;
+  } @else {
+    @if $grid == true {
+      @if $last == false{
+        @if $margin-right != -1 {
+          margin-right: $margin-right;
+          $size: ($size * $fbox-column-width) - $margin-right;
+        } @else {
+          margin-right: $fbox-grid-margin;
+          $size: ($size * $fbox-column-width) - $fbox-grid-margin;
+        }
+      } @else {
+        $size: $size * $fbox-column-width;
+      }
+    }
+  }
+
+  @if $width != -1 {
+    width: $width - fbox-width-pad($padding);
+  } @else {
+    width: nth($size,1) - fbox-width-pad($padding);
+  }
+  
+  @if $height != -1 {
+    height: $height - fbox-height-pad($padding);
+  } @else {  
+    @if length($size) == 2 {
+      height: nth($size,2) - fbox-height-pad($padding);
+    }
+  }
+  
+  @if $padding != -1 { 
+    padding: $padding;
+  }
+  
+  @if $margin-left != -1 {
+    margin-left: $margin-left;
+  }
+  
+  @if $margin-sides != -1 {
+    @if length($margin-sides) == 1 {
+      margin-left: $margin-sides;
+      margin-right: $margin-sides;
+    } @else {
+      margin-left: nth($margin-sides,1);
+      margin-right: nth($margin-sides,2);
+    }
+  }
+  @if $margin != -1 {
+    margin: $margin;
+  }
+}

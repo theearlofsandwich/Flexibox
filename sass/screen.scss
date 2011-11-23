@@ -1,0 +1,15 @@
+@import "flexibox";
+
+.container {
+  @include fbox-container();
+}
+
+.lhs {
+  @include fbox-column($image: 'middle3.jpg', $margin: 0, $padding: 15px);
+  background-color: red;
+}
+
+.rhs {
+  @include fbox-column(10, $grid: true, $padding: 20px, $margin-right: 30px);
+  background-color: yellow;
+}
