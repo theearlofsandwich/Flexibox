@@ -2,14 +2,28 @@
 
 .container {
   @include fbox-container();
+  background: url(../images/grid.png);
 }
 
 .lhs {
-  @include fbox-column($image: 'middle3.jpg', $margin: 0, $padding: 15px);
-  background-color: red;
+  @include fbox-grid( 10, 10px, $margin: 0 10px, $prepend: 3, $append: 1, $last: false);
+  background-color: yellow;  
+}
+
+.middle {
+  @include fbox-grid( 5, $append: 1 );
+  background-color: blue;
+}
+
+.middle-left {
+  @include fbox-grid( 3, $padding: 5px );
+}
+
+.middle-right {
+  @include fbox-grid( 2, $last: true );
 }
 
 .rhs {
-  @include fbox-column(10, $grid: true, $padding: 20px, $margin-right: 30px);
-  background-color: yellow;
+  @include fbox-image('middle3.jpg', $padding: 15px);
+  background-color: red;
 }
