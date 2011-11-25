@@ -1,14 +1,39 @@
+@import "compass/layout/grid-background";
+
 /* Overridable variables */
+$fbox-grid-pad-sides: false !default;
 $fbox-grid-columns: 24 !default;
 $fbox-container-size: 950px !default;
 $fbox-grid-margin: 10px !default;
 
 /* Consts */
 $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-columns;
+$fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
 
-@mixin fbox-container($width: $fbox-container-size) {
-  width: $width;
+@mixin fbox-show-grid() {
+  @if $fbox-grid-pad-sides == true {
+    $grid-background-offset: $fbox-grid-margin;
+  }
+  $grid-background-column-color: #e8effb;
+  $grid-background-gutter-color: #ffffff;
+
+  @include column-grid-background( $fbox-grid-columns, $fbox-real-column-width , $fbox-grid-margin  );
+}
+
+@mixin fbox-container($width: $fbox-container-size, $pad-sides: $fbox-grid-pad-sides, $show-grid: false) {
+
+  @if $pad-sides == true {
+    $fbox-grid-pad-sides: $pad-sides;
+    width: $width - ($fbox-grid-margin * 2);
+    padding-left: $fbox-grid-margin;
+    padding-right: $fbox-grid-margin;
+  }
+
+  @if $show-grid == true {
+    @include fbox-show-grid();
+  }
+
   margin: 0 auto;
 }
 

@@ -1,8 +1,7 @@
 @import "flexibox";
 
 .container {
-  @include fbox-container();
-  background: url(../images/grid.png);
+  @include fbox-container(970px, true, true);
 }
 
 .lhs {
