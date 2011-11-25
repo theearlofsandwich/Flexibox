@@ -10,8 +10,8 @@ $fbox-grid-margin: 10px !default;
 $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-columns;
 $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
-
 @mixin fbox-show-grid() {
+
   @if $fbox-grid-pad-sides == true {
     $grid-background-offset: $fbox-grid-margin;
   }
@@ -21,13 +21,28 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
   @include column-grid-background( $fbox-grid-columns, $fbox-real-column-width , $fbox-grid-margin  );
 }
 
-@mixin fbox-container($width: $fbox-container-size, $pad-sides: $fbox-grid-pad-sides, $show-grid: false) {
+@mixin fbox-container($show-grid: false, $width: -9999, $columns: -9999, $gutter: -9999, $pad-sides: $fbox-grid-pad-sides ) {
+
+  @if $width != 9999 {
+    $fbox-container-size: $width;
+  }
+  @if $columns != 9999 {
+    $fbox-grid-columns: $columns;
+  }
+  @if $gutter != 9999 {
+    $fbox-grid-margin: $gutter;
+  }
+
+  $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-columns;
+  $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
   @if $pad-sides == true {
     $fbox-grid-pad-sides: $pad-sides;
     width: $width - ($fbox-grid-margin * 2);
     padding-left: $fbox-grid-margin;
     padding-right: $fbox-grid-margin;
+  } @else {
+    width: $width;
   }
 
   @if $show-grid == true {

@@ -1,28 +1,21 @@
 @import "flexibox";
 
 .container {
-  @include fbox-container(970px, true, true);
+  @include fbox-container($show-grid: true, $width: 700px, $columns: 14, $gutter: 10px, $pad-sides: true);
 }
 
 .lhs {
-  @include fbox-grid( 10, $prepend: 1, $padding: 20px 10px, $append: 2 );
+  @include fbox-grid( 3, $prepend: 1, $height: 100px, $padding: 20px 20px, $append: 2 );
   background-color: yellow;
 }
 
 .middle {
-  @include fbox-grid( 5 );
+  @include fbox-grid( 2, $last: true );
   background-color: blue;
 }
 
-.middle-left {
-  @include fbox-grid( 3, $padding: 5px );
-}
-
-.middle-right {
-  @include fbox-grid( 2, $last: true );
-}
 
 .rhs {
-  @include fbox-grid-image('middle3.jpg', $padding: 10px, $append: 1, $fixed-height: true);
+  @include fbox-grid-image('middle3.jpg', $padding: 10px, $fixed-height: false);
   background-color: red;
 }
