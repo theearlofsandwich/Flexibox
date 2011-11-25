@@ -23,6 +23,6 @@
 }
 
 .rhs {
-  @include fbox-image('middle3.jpg', $padding: 15px, $fixed-height: false);
+  @include fbox-grid-image('middle3.jpg', $padding: 10px, $append: 1, $fixed-height: true);
   background-color: red;
 }

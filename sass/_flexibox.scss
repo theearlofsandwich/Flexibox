@@ -139,7 +139,11 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
   $width: image-width($image);
   @if $fixed-height == true {
-    height: image-height($image);
+    @if $padding != -9999 {
+      height: image-height($image) - fbox-height-pad($padding);;
+    } @else {
+      height: image-height($image);
+    }
     background: image-url( $image ) repeat-y;
   } @else {
     background: image-url( $image ) no-repeat;
@@ -163,8 +167,30 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
   @if $margin-right != -9999 {
     margin-right: $margin-right;
   }
-
 }
+
+@mixin fbox-grid-image( $image, $padding: -9999, $fixed-height: true, $append: -9999, $prepend: -9999, $last: false, $fixed-height: true){
+  // Work out the number of spans required
+  $image-width: 75;//image-width($image);
+  $image-width-guttered: $image-width + $fbox-grid-margin;
+  $number-of-spans: ceil($image-width-guttered / $fbox-column-width);
+
+  $span-width: ($number-of-spans * $fbox-column-width) - $fbox-grid-margin;
+
+  $margin-right: $span-width - $image-width;
+
+  $height: -9999;
+  @if $fixed-height == true {
+    $height: image-height($image);
+    background: image-url( $image ) repeat-y;
+  } @else {
+    background: image-url( $image ) no-repeat;
+  }
+
+  @include fbox-grid( $number-of-spans, $padding: $padding, $margin-right: $margin-right, $height: $height, $append: $append, $prepend: $prepend, $last: $last)
+}
+
+
 
 @mixin fbox-flex( $size: -9999, $padding: -9999, $margin: -9999, $margin-left: -9999, $margin-right: -9999, $width: -9999, $height: -9999 ) {
   @extend .fbox-column;
