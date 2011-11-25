@@ -38,70 +38,70 @@ $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-colu
 }
 
 
-@mixin fbox-grid( $size, $padding: -1, $margin: -1, $margin-left: -1, $margin-right: -1, $height: -1, $append: -1, $prepend: -1, $last: false ){
+@mixin fbox-grid( $size, $padding: -9999, $margin: -9999, $margin-left: -9999, $margin-right: -9999, $height: -9999, $append: -9999, $prepend: -9999, $last: false ){
   @extend .fbox-column;
-  
+
   // Get the grid size, completely untouched
   $basesize: ($size * $fbox-column-width) - $fbox-grid-margin;
-  
+
   // If a margin is supplied we want to subtract that from the width
   $left-margin-width: fbox-calc-margin( 'left', $margin, $margin-left);
   $right-margin-width: fbox-calc-margin( 'right', $margin, $margin-right);
-  
+
   // Subtract the margins
   $basesize: $basesize - ($left-margin-width + $right-margin-width);
-  
+
   // Now subtract padding if we have it
-  @if $padding != -1 {
+  @if $padding != -9999 {
     $basesize: $basesize - fbox-width-pad( $padding );
     padding: $padding;
-    @if $height != -1 {
+    @if $height != -9999 {
       height: $height - fbox-height-pad($padding);
     }
   } @else {
-    @if $height != -1 {
+    @if $height != -9999 {
       height: $height;
     }
   }
-  
+
   width: $basesize;
-  
-  @if $margin != -1 {
+
+  @if $margin != -9999 {
     margin: $margin;
     // Get left and right margin amounts
-    @if $margin-left == -1 {
+    @if $margin-left == -9999 {
       $margin-left: $left-margin-width;
     }
-    @if $margin-right == -1 {
+    @if $margin-right == -9999 {
       $margin-right: $right-margin-width;
     }
-    
+
   }
-  
-  @if $prepend != -1 {
-    @if $margin-left == -1 {
-      $margin-left: $append * $fbox-column-width;
+
+  @if $prepend != -9999 {
+    @if $margin-left == -9999 {
+      $margin-left: $prepend * $fbox-column-width;
     } @else {
       $margin-left: $margin-left + ($prepend * $fbox-column-width);
     }
   }
-  @if $margin-left != -1 {
+  @if $margin-left != -9999 {
     margin-left: $margin-left;
   }
-  
+
   $fbox-grid-margin-add: 0;
   @if $last == false {
     $fbox-grid-margin-add: $fbox-grid-margin;
   }
 
-  @if $append != -1 {
-    @if $margin-right == -1 {
+  @if $append != -9999 {
+    @if $margin-right == -9999 {
       $margin-right: $append * $fbox-column-width;
     } @else {
       $margin-right: $margin-right + ($append * $fbox-column-width);
     }
   }
-  @if $margin-right != -1 {
+  @if $margin-right != -9999 {
     margin-right: $margin-right + $fbox-grid-margin-add;
   } @else {
     margin-right: $fbox-grid-margin-add;
@@ -109,9 +109,9 @@ $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-colu
 
 }
 
-@mixin fbox-image( $image, $padding: -1, $margin: -1, $margin-left: -1, $margin-right: -1, $fixed-height: true){
+@mixin fbox-image( $image, $padding: -9999, $margin: -9999, $margin-left: -9999, $margin-right: -9999, $fixed-height: true){
   @extend .fbox-column;
-  
+
   $width: image-width($image);
   @if $fixed-height == true {
     height: image-height($image);
@@ -119,62 +119,62 @@ $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-colu
   } @else {
     background: image-url( $image ) no-repeat;
   }
-  
-  @if $padding != -1 {
+
+  @if $padding != -9999 {
     width: $width - fbox-width-pad($padding);
     padding: $padding;
   } @else {
     width: $width;
   }
-  
-  @if $margin != -1 {
+
+  @if $margin != -9999 {
     margin: $margin;
   }
-  
-  @if $margin-left != -1 {
+
+  @if $margin-left != -9999 {
     margin-left: $margin-left;
   }
 
-  @if $margin-right != -1 {
+  @if $margin-right != -9999 {
     margin-right: $margin-right;
   }
 
 }
 
-@mixin fbox-flex( $size: -1, $padding: -1, $margin: -1, $margin-left: -1, $margin-right: -1, $width: -1, $height: -1 ) {
+@mixin fbox-flex( $size: -9999, $padding: -9999, $margin: -9999, $margin-left: -9999, $margin-right: -9999, $width: -9999, $height: -9999 ) {
   @extend .fbox-column;
-  
-  @if $width == -1 {
+
+  @if $width == -9999 {
     $width: nth($size, 1);
   }
-  @if $height == -1 {
+  @if $height == -9999 {
     @if length($size) == 2 {
       $height: nth($size, 2);
     }
   }
 
-  @if $padding != -1 {
+  @if $padding != -9999 {
     width: $width - fbox-width-pad($padding);
     padding: $padding;
-    @if $height != -1 {
+    @if $height != -9999 {
       height: $height - fbox-height-pad($padding);
     }
   } @else {
     width: $width;
-    @if $height != -1 {
+    @if $height != -9999 {
       height: $height;
-    }    
+    }
   }
 
-  @if $margin != -1 {
+  @if $margin != -9999 {
     margin: $margin;
   }
 
-  @if $margin-left != -1 {
+  @if $margin-left != -9999 {
     margin-left: $margin-left;
   }
 
-  @if $margin-right != -1 {
+  @if $margin-right != -9999 {
     margin-right: $margin-right;
   }
 }
@@ -210,13 +210,13 @@ $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-colu
   }
 }
 
-@function fbox-calc-margin( $side: 'left', $margin: -1, $margin-side: -1 ){
-  
-  @if $margin-side != -1 {
+@function fbox-calc-margin( $side: 'left', $margin: -9999, $margin-side: -9999 ){
+
+  @if $margin-side != -9999 {
     @return $margin-side;
   }
-  
-  @if $margin != -1 {
+
+  @if $margin != -9999 {
     // If we never have a 4th element, then no need to calculate left
     @if length($margin) == 1 {
       @return nth($margin, 1);

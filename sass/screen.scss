@@ -6,12 +6,12 @@
 }
 
 .lhs {
-  @include fbox-grid( 10, 10px, $margin: 0 10px, $prepend: 3, $append: 1, $last: false);
-  background-color: yellow;  
+  @include fbox-grid( 10, $prepend: 1, $padding: 20px 10px, $append: 2 );
+  background-color: yellow;
 }
 
 .middle {
-  @include fbox-grid( 5, $append: 1 );
+  @include fbox-grid( 5 );
   background-color: blue;
 }
 
@@ -24,6 +24,6 @@
 }
 
 .rhs {
-  @include fbox-image('middle3.jpg', $padding: 15px);
+  @include fbox-image('middle3.jpg', $padding: 15px, $fixed-height: false);
   background-color: red;
 }
