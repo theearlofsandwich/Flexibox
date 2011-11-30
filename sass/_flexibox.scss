@@ -186,7 +186,7 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
 @mixin fbox-grid-image( $image, $padding: -9999, $fixed-height: true, $append: -9999, $prepend: -9999, $last: false, $fixed-height: true){
   // Work out the number of spans required
-  $image-width: 75;//image-width($image);
+  $image-width: image-width($image);
   $image-width-guttered: $image-width + $fbox-grid-margin;
   $number-of-spans: ceil($image-width-guttered / $fbox-column-width);
 
