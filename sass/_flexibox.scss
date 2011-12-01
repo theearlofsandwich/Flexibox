@@ -23,13 +23,13 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
 @mixin fbox-container($show-grid: false, $width: -9999, $columns: -9999, $gutter: -9999, $pad-sides: $fbox-grid-pad-sides ) {
 
-  @if $width != 9999 {
+  @if $width != -9999 {
     $fbox-container-size: $width;
   }
-  @if $columns != 9999 {
+  @if $columns != -9999 {
     $fbox-grid-columns: $columns;
   }
-  @if $gutter != 9999 {
+  @if $gutter != -9999 {
     $fbox-grid-margin: $gutter;
   }
 
@@ -38,11 +38,11 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
   @if $pad-sides == true {
     $fbox-grid-pad-sides: $pad-sides;
-    width: $width - ($fbox-grid-margin * 2);
+    width: $fbox-container-size - ($fbox-grid-margin * 2);
     padding-left: $fbox-grid-margin;
     padding-right: $fbox-grid-margin;
   } @else {
-    width: $width;
+    width: $fbox-container-size;
   }
 
   @if $show-grid == true {

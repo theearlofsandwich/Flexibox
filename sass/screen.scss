@@ -1,7 +1,7 @@
 @import "flexibox";
 
 .container {
-  @include fbox-container($show-grid: true, $width: 700px, $columns: 14, $gutter: 10px, $pad-sides: true);
+  @include fbox-container($show-grid: true);
 }
 
 .lhs {
