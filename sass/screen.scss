@@ -19,3 +19,7 @@
   @include fbox-grid-image('middle3.jpg', $padding: 10px, $fixed-height: false);
   background-color: red;
 }
+
+.clearfix {
+  @include fbox-clearfix;
+}
