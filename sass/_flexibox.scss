@@ -10,6 +10,24 @@ $fbox-grid-margin: 10px !default;
 $fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-columns;
 $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
+@mixin fbox-clearfix(){
+  *zoom: 1;
+  display: block;
+
+  &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+
+.clearfix {
+  @include fbox-clearfix();
+}
+
 @mixin fbox-show-grid() {
 
   @if $fbox-grid-pad-sides == true {
@@ -50,6 +68,8 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
   }
 
   margin: 0 auto;
+
+  @extend .clearfix;
 }
 
 .fbox-column {
@@ -242,19 +262,6 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
 
   @if $margin-right != -9999 {
     margin-right: $margin-right;
-  }
-}
-
-@mixin fbox-clearfix(){
-  *zoom: 1;
-
-  &:after {
-    content: "\0020";
-    display: block;
-    height: 0;
-    clear: both;
-    overflow: hidden;
-    visibility: hidden;
   }
 }
 
