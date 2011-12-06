@@ -40,7 +40,7 @@ Include _flexibox.scss in your compass project.
 .fbox-nospacer - Add to an `<hr>` to create a break between vertical columns. Breaks without any space.
 
 
-### Container
+### fbox-container
 
 Create a centered container to hold the grid. This defaults to 950px wide, 24 columns with
 10px gutter.
@@ -55,9 +55,9 @@ Optional parameters:
 - $gutter: Width of gutter (column margins) in pixels
 - $pad-sides: true or false - If pad-sides is true, include the padding width in $width (so 970px rather than 950px)
 
-  @include fbox-container($show-grid: true, $width: 950px, $columns: 24, $gutter: 10px);
+    @include fbox-container($show-grid: true, $width: 950px, $columns: 24, $gutter: 10px);
 
-### Grid
+### fbox-grid
 
 Create a grid column. The goal is always to fit into the grid, so margins, padding, prepend, append
 will always end at a valid grid position.
@@ -65,9 +65,11 @@ will always end at a valid grid position.
     @include fbox-grid($columns);
 
 Required parameter:
+
 - $size: Number of columns to span.
 
 Optional parameters:
+
 - $padding: Padding in pixels. Pads inside column a bit like old box model.
 - $margin: Margin to apply to column. Applies inside column as well so does not break out from grid.
 Use normal $margin css shorthand.
@@ -82,16 +84,18 @@ Use normal $margin css shorthand.
     @include fbox-grid(24, $last: true);
     @include fbox-grid(7, $prepend: 1, $append: 2, $margin: 0 10px, $padding: 5px) ;
 
-### Flex column
+### fbox-flex
 
 Creates a floated column that does not respect the grid.
 
     @include fbox-flex($size);
 
 Required parameter:
+
 - $size: A width and optionally height in pixels to span. Use css shorthand.
 
 Optional parameters:
+
 - $padding: Padding in pixels. Pads inside column a bit like old box model.
 - $margin: Margin to apply to column. Applies inside column as well so does not break out from grid.
 Use normal $margin css shorthand.
@@ -104,7 +108,7 @@ Use normal $margin css shorthand.
     @include fbox-flex(200px 150px);
     @include fbox-flex(200px, $margin: 10px 5px 15px 15px);
 
-### Grid Image
+### fbox-grid-image
 
 Use an image to create a column automatically based on the image dimensions. Handy for panels.
 Automatically adds the image in as the background.
@@ -112,29 +116,38 @@ Respects the grid so will add margin as necessary to reach the next grid column.
 The image must reside in the images directory specified in your Compass config file.
 
     @include fbox-grid-image("image.jpg");
+    @include fbox-grid-image("image.jpg", $padding: 10px);
 
 Required parameter:
+
 - $image: An image filename.
 
 Optional parameters:
+
 - $padding: Padding in pixels. Pads inside column a bit like old box model.
 - $fixed-height: true or false. If set to true will set the column height to the image height.
 - $append: Append a number of spans after the column.
 - $prepend: Prepend a number of spans before the column.
 - $last: Remove any right hand margin for columns that reach the right hand side of the container.
 
-### Image
+### fbox-image
 
 Use an image to create a floated column that does not respect the grid.
 Automatically adds the image in as the background.
 
+    @include fbox-image("image.jpg");
+
 Required parameter:
+
 - $image: An image filename.
 
 Optional parameters:
+
 - $padding: Padding in pixels. Pads inside column a bit like old box model.
 - $margin: Margin to apply to column. Applies margin OUTSIDE the image.
 Use normal $margin css shorthand.
 - $margin-left: Left margin in pixels (overrides $margin left hand setting)
 - $margin-right: Just a right margin (overrides $margin right hand setting)
 - $fixed-height: true or false. If set to true will set the column height to the image height.
+
+    @include fbox-image("image.jpg");
