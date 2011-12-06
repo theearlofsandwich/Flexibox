@@ -57,6 +57,7 @@ Optional parameters:
 
 Examples
 
+    @include fbox-container();
     @include fbox-container($show-grid: true, $width: 950px, $columns: 24, $gutter: 10px);
 
 ### fbox-grid
