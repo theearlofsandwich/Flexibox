@@ -55,6 +55,8 @@ Optional parameters:
 - $gutter: Width of gutter (column margins) in pixels
 - $pad-sides: true or false - If pad-sides is true, include the padding width in $width (so 970px rather than 950px)
 
+Example
+
     @include fbox-container($show-grid: true, $width: 950px, $columns: 24, $gutter: 10px);
 
 ### fbox-grid
