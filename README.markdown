@@ -55,7 +55,7 @@ Optional parameters:
 - $gutter: Width of gutter (column margins) in pixels
 - $pad-sides: true or false - If pad-sides is true, include the padding width in $width (so 970px rather than 950px)
 
-Example
+Examples
 
     @include fbox-container($show-grid: true, $width: 950px, $columns: 24, $gutter: 10px);
 
@@ -82,6 +82,8 @@ Use normal $margin css shorthand.
 - $prepend: Prepend a number of spans before the column.
 - $last: Remove any right hand margin for columns that reach the right hand side of the container.
 
+Examples
+
     @include fbox-grid(5);
     @include fbox-grid(24, $last: true);
     @include fbox-grid(7, $prepend: 1, $append: 2, $margin: 0 10px, $padding: 5px) ;
@@ -106,6 +108,8 @@ Use normal $margin css shorthand.
 - $width: A width in pixels (overrides $size)
 - $height: A height in pixels (overrides $size)
 
+Examples
+
     @include fbox-flex(200px);
     @include fbox-flex(200px 150px);
     @include fbox-flex(200px, $margin: 10px 5px 15px 15px);
@@ -118,7 +122,6 @@ Respects the grid so will add margin as necessary to reach the next grid column.
 The image must reside in the images directory specified in your Compass config file.
 
     @include fbox-grid-image("image.jpg");
-    @include fbox-grid-image("image.jpg", $padding: 10px);
 
 Required parameter:
 
@@ -131,6 +134,10 @@ Optional parameters:
 - $append: Append a number of spans after the column.
 - $prepend: Prepend a number of spans before the column.
 - $last: Remove any right hand margin for columns that reach the right hand side of the container.
+
+Examples
+
+    @include fbox-grid-image("image.jpg", $padding: 10px);
 
 ### fbox-image
 
@@ -151,5 +158,7 @@ Use normal $margin css shorthand.
 - $margin-left: Left margin in pixels (overrides $margin left hand setting)
 - $margin-right: Just a right margin (overrides $margin right hand setting)
 - $fixed-height: true or false. If set to true will set the column height to the image height.
+
+Examples
 
     @include fbox-image("image.jpg");
