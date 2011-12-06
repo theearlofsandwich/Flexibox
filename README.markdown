@@ -161,4 +161,4 @@ Use normal $margin css shorthand.
 
 Examples
 
-    @include fbox-image("image.jpg");
+    @include fbox-image("image.jpg", $fixed-height: true);
