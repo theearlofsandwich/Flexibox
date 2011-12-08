@@ -77,6 +77,8 @@ $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
   /* Apparently this helps in IE */
   display: inline;
   overflow-x: hidden;
+  /* And this helps Firefox when a column has no content */
+  min-height: 1px;
 }
 
 .fbox-spacer {
