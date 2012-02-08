@@ -1,21 +1,56 @@
-@import "flexibox";
+@import "flexibox-liquid";
+
+$fbox-liquid: true;
 
 .container {
   @include fbox-container($show-grid: true);
 }
 
+h1 {
+  font-size: fbox-em(24px);
+}
+
+p {
+  font-size: fbox-em(14px);
+}
+
 .lhs {
-  @include fbox-grid( 3, $prepend: 1, $height: 100px, $padding: 20px 20px, $append: 2 );
   background-color: yellow;
 }
 
+.rhs {
+  background-color: red;
+}
+
 .middle {
-  @include fbox-grid( 2, $last: true );
   background-color: blue;
 }
 
-
 .rhs {
-  @include fbox-grid-image('middle3.jpg', $padding: 10px, $fixed-height: false);
-  background-color: red;
+  clear: both;
 }
+
+@media screen and (min-width: 480px) {
+  .lhs {
+    @include fbox-grid( 3, $prepend: 1, $height: 100px, $padding: 20px 20px, $append: 2 );
+  }
+
+  .middle {
+    @include fbox-grid( 4 );
+  }
+}
+
+/* Columnize elements above 780px */
+@media screen and (min-width: 768px) {
+  .rhs {
+    @include fbox-grid( 8, $padding: 4px );
+  }
+}
+
+.floater {
+  float: right;
+  padding-left: 10px;
+  @include fbox-img(8, 'middle3.jpg');
+}
+
+
