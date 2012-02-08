@@ -26,17 +26,16 @@ p {
   background-color: blue;
 }
 
-.rhs {
-  clear: both;
-}
-
 @media screen and (min-width: 480px) {
   .lhs {
-    @include fbox-grid( 3, $prepend: 1, $height: 100px, $padding: 20px 20px, $append: 2 );
+    @include fbox-grid( 3, $prepend: 1, $height: 150px, $padding: 20px 20px, $append: 2 );
   }
 
   .middle {
     @include fbox-grid( 4 );
+  }
+  .rhs {
+    clear: both;
   }
 }
 
