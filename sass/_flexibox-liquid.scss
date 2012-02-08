@@ -174,11 +174,11 @@ img, embed, object, video {
     $basesize: $basesize - fbox-width-pad( $padding );
     padding: fbox-percentage($padding);
     @if $height != -9999 {
-      height: fbox-percentage($height - fbox-height-pad($padding));
+      height: $height - fbox-height-pad($padding);
     }
   } @else {
     @if $height != -9999 {
-      height: fbox-percentage($height);
+      height: $height;
     }
   }
 
