@@ -20,6 +20,7 @@ p {
 
 .rhs {
   background-color: red;
+  padding: 10px;
 }
 
 .middle {
@@ -32,10 +33,13 @@ p {
   }
 
   .middle {
-    @include fbox-grid( 4 );
+    @include fbox-grid( 18, $last: true );
   }
   .rhs {
     clear: both;
+  }
+  h1 {
+    font-size: fbox-em(32px);
   }
 }
 
