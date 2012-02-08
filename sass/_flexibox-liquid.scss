@@ -1,0 +1,380 @@
+@import "compass/layout/grid-background";
+
+/* Overridable variables */
+$fbox-grid-pad-sides: false !default;
+$fbox-grid-columns: 24 !default;
+$fbox-container-size: 950px !default;
+$fbox-grid-margin: 10px !default;
+$fbox-full-size: $fbox-container-size + $fbox-grid-margin !default;
+
+/* Consts */
+$fbox-column-width: ($fbox-container-size + $fbox-grid-margin) / $fbox-grid-columns;
+$fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
+
+img, embed, object, video {
+  max-width: 100%;
+}
+
+@mixin fbox-nofloat() {
+  width: auto;
+  float: none;
+  display: block;
+  overflow-x: auto;
+}
+
+@mixin fbox-float() {
+  float: left;
+  clear: none;
+  /* Apparently this helps in IE */
+  display: inline;
+  overflow-x: hidden;
+  /* And this helps Firefox when a column has no content */
+  min-height: 1px;
+}
+
+@mixin fbox-img( $columns, $img: -9999, $width: -9999 ) {
+  $basesize: ($columns * $fbox-column-width) - $fbox-grid-margin;
+
+  @if $img != 9999 {
+    $width: image_width($img) / $basesize;
+  }
+  width: percentage($width);
+}
+
+@function fbox-em($target-px, $context: 16px) {
+  @return ($target-px / $context) * 1em;
+}
+
+@mixin fbox-clearfix(){
+  *zoom: 1;
+  display: block;
+
+  &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+
+.clearfix {
+  @include fbox-clearfix();
+}
+
+@mixin fbox-show-grid() {
+
+  @if $fbox-grid-pad-sides == true {
+    //$grid-background-offset: $fbox-grid-margin;
+  }
+  $grid-background-column-color: #e8effb;
+  $grid-background-gutter-color: #ffffff;
+  $grid-background-offset: 0px;
+
+  @include column-grid-background( $fbox-grid-columns, $fbox-real-column-width, $fbox-grid-margin, $force-fluid: true );
+}
+
+@function fbox-percentage( $size ){
+
+  @if $size == 0 {
+    @return 0;
+  }
+
+  @if length($size) == 1 {
+    @return percentage( nth($size, 1) / $fbox-container-size );
+  } @else if length($size) == 2 {
+    @return percentage( nth($size, 1) / $fbox-container-size ) percentage( nth($size, 2) / $fbox-container-size );
+  } @else if length($size) == 3 {
+    @return percentage( nth($size, 1) / $fbox-container-size ) percentage( nth($size, 2) / $fbox-container-size ) percentage( nth($size, 3) / $fbox-container-size );
+  } @else {
+    @return percentage( nth($size, 1) / $fbox-container-size ) percentage( nth($size, 2) / $fbox-container-size ) percentage( nth($size, 3) / $fbox-container-size ) percentage( nth($size, 4) / $fbox-container-size );
+  }
+}
+
+@mixin fbox-container($show-grid: false, $width: -9999, $fluid-width: 90%, $columns: -9999, $gutter: -9999, $pad-sides: $fbox-grid-pad-sides ) {
+
+  @if $width != -9999 {
+    $fbox-container-size: $width;
+  }
+  @if $columns != -9999 {
+    $fbox-grid-columns: $columns;
+  }
+  @if $gutter != -9999 {
+    $fbox-grid-margin: $gutter;
+  }
+
+  $fbox-column-width: $fbox-full-size / $fbox-grid-columns;
+  $fbox-real-column-width: $fbox-column-width - $fbox-grid-margin;
+
+  width: $fluid-width;
+  //padding-left: fbox-percentage($fbox-grid-margin);
+  //padding-right: fbox-percentage($fbox-grid-margin);
+
+  @if $show-grid == true {
+    @include fbox-show-grid();
+  }
+
+  margin: 0 auto;
+
+  @extend .clearfix;
+}
+
+.fbox-nocolumn {
+  width: auto;
+  float: none;
+  display: block;
+  overflow-x: auto;
+}
+
+.fbox-column {
+  float: left;
+  /* Apparently this helps in IE */
+  display: inline;
+  overflow-x: hidden;
+  /* And this helps Firefox when a column has no content */
+  min-height: 1px;
+}
+
+.fbox-spacer {
+  background: #fff;
+  color: #fff;
+  visibility: hidden;
+  clear: both;
+  float: none;
+  width: 100%;
+  height: 1px;
+  margin: 0 0 17px;
+  border: none;
+}
+
+.fbox-nospacer {
+  @extend .fbox-spacer;
+  height: 0;
+  margin: 0;
+}
+
+
+@mixin fbox-grid( $size, $padding: -9999, $margin: -9999, $margin-left: -9999, $margin-right: -9999, $height: -9999, $append: -9999, $prepend: -9999, $last: false ){
+  //@extend .fbox-column;
+  @include fbox-float();
+
+  // Get the grid size, completely untouched
+  $basesize: ($size * $fbox-column-width) - $fbox-grid-margin;
+
+  // If a margin is supplied we want to subtract that from the width
+  $left-margin-width: fbox-calc-margin( 'left', $margin, $margin-left);
+  $right-margin-width: fbox-calc-margin( 'right', $margin, $margin-right);
+
+  // Subtract the margins
+  $basesize: $basesize - ($left-margin-width + $right-margin-width);
+
+  // Now subtract padding if we have it
+  @if $padding != -9999 {
+    $basesize: $basesize - fbox-width-pad( $padding );
+    padding: fbox-percentage($padding);
+    @if $height != -9999 {
+      height: fbox-percentage($height - fbox-height-pad($padding));
+    }
+  } @else {
+    @if $height != -9999 {
+      height: fbox-percentage($height);
+    }
+  }
+
+  width: fbox-percentage($basesize);
+
+  @if $margin != -9999 {
+    margin: fbox-percentage($margin);
+    // Get left and right margin amounts
+    @if $margin-left == -9999 {
+      $margin-left: $left-margin-width;
+    }
+    @if $margin-right == -9999 {
+      $margin-right: $right-margin-width;
+    }
+
+  }
+
+  @if $prepend != -9999 {
+    @if $margin-left == -9999 {
+      $margin-left: $prepend * $fbox-column-width;
+    } @else {
+      $margin-left: $margin-left + ($prepend * $fbox-column-width);
+    }
+  }
+  @if $margin-left != -9999 {
+    margin-left: fbox-percentage($margin-left);
+  }
+
+  $fbox-grid-margin-add: 0;
+  @if $last == false {
+    $fbox-grid-margin-add: $fbox-grid-margin;
+  }
+
+  @if $append != -9999 {
+    @if $margin-right == -9999 {
+      $margin-right: $append * $fbox-column-width;
+    } @else {
+      $margin-right: $margin-right + ($append * $fbox-column-width);
+    }
+  }
+  @if $margin-right != -9999 {
+    margin-right: fbox-percentage($margin-right + $fbox-grid-margin-add);
+  } @else {
+    margin-right: fbox-percentage($fbox-grid-margin-add);
+  }
+
+}
+
+@mixin fbox-image( $image, $padding: -9999, $margin: -9999, $margin-left: -9999, $margin-right: -9999, $fixed-height: true){
+  @extend .fbox-column;
+
+  $width: image-width($image);
+  @if $fixed-height == true {
+    @if $padding != -9999 {
+      height: fbox-percentage(image-height($image) - fbox-height-pad($padding));
+    } @else {
+      height: fbox-percentage(image-height($image));
+    }
+    background: image-url( $image ) repeat-y;
+  } @else {
+    background: image-url( $image ) no-repeat;
+  }
+
+  @if $padding != -9999 {
+    width: fbox-percentage($width - fbox-width-pad($padding));
+    padding: fbox-percentage($padding);
+  } @else {
+    width: fbox-percentage($width);
+  }
+
+  @if $margin != -9999 {
+    margin: fbox-percentage($margin);
+  }
+
+  @if $margin-left != -9999 {
+    margin-left: fbox-percentage($margin-left);
+  }
+
+  @if $margin-right != -9999 {
+    margin-right: fbox-percentage($margin-right);
+  }
+}
+
+@mixin fbox-grid-image( $image, $padding: -9999, $fixed-height: true, $append: -9999, $prepend: -9999, $last: false, $fixed-height: true){
+  // Work out the number of spans required
+  $image-width: image-width($image);
+  $image-width-guttered: $image-width + $fbox-grid-margin;
+  $number-of-spans: ceil($image-width-guttered / $fbox-column-width);
+
+  $span-width: ($number-of-spans * $fbox-column-width) - $fbox-grid-margin;
+
+  $margin-right: $span-width - $image-width;
+
+  $height: -9999;
+  @if $fixed-height == true {
+    $height: image-height($image);
+    background: image-url( $image ) repeat-y;
+  } @else {
+    background: image-url( $image ) no-repeat;
+  }
+
+  @include background-size(cover);
+
+  @include fbox-grid( $number-of-spans, $padding: $padding, $margin-right: $margin-right, $height: $height, $append: $append, $prepend: $prepend, $last: $last)
+}
+
+
+
+@mixin fbox-flex( $size: -9999, $padding: -9999, $margin: -9999, $margin-left: -9999, $margin-right: -9999, $width: -9999, $height: -9999 ) {
+  @extend .fbox-column;
+
+  @if $width == -9999 {
+    $width: nth($size, 1);
+  }
+  @if $height == -9999 {
+    @if length($size) == 2 {
+      $height: nth($size, 2);
+    }
+  }
+
+  @if $padding != -9999 {
+    width: $width - fbox-width-pad($padding);
+    padding: $padding;
+    @if $height != -9999 {
+      height: $height - fbox-height-pad($padding);
+    }
+  } @else {
+    width: $width;
+    @if $height != -9999 {
+      height: $height;
+    }
+  }
+
+  @if $margin != -9999 {
+    margin: $margin;
+  }
+
+  @if $margin-left != -9999 {
+    margin-left: $margin-left;
+  }
+
+  @if $margin-right != -9999 {
+    margin-right: $margin-right;
+  }
+}
+
+/* Helper functions */
+@function fbox-width-pad( $pad ){
+  $padlength: length($pad);
+  $padwidth: 0;
+
+  @if $padlength == 1 {
+    @return nth($pad, 1) * 2;
+  } @else if $padlength == 2 {
+    @return nth($pad, 2) * 2;
+  } @else if $padlength == 3 {
+    @return nth($pad, 2) * 2;
+  } @else {
+    @return nth($pad, 2) + nth($pad, 4);
+  }
+}
+
+@function fbox-height-pad( $pad ){
+  $padlength: length($pad);
+  $padheight: 0;
+
+  @if $padlength == 1 {
+    @return nth($pad, 1) * 2;
+  } @else if $padlength == 2 {
+    @return nth($pad, 1) * 2;
+  } @else if $padlength == 3 {
+    @return nth($pad, 1) + nth($pad, 3);
+  } @else {
+    @return nth($pad, 1) + nth($pad, 3);
+  }
+}
+
+@function fbox-calc-margin( $side: 'left', $margin: -9999, $margin-side: -9999 ){
+
+  @if $margin-side != -9999 {
+    @return $margin-side;
+  }
+
+  @if $margin != -9999 {
+    // If we never have a 4th element, then no need to calculate left
+    @if length($margin) == 1 {
+      @return nth($margin, 1);
+    } @if length($margin) == 2 or length($margin) == 3 {
+      @return nth($margin, 2);
+    }
+
+    @if $side == 'left' {
+      @return nth($margin, 4);
+    } @else {
+      @return nth($margin, 2);
+    }
+  }
+  @return 0;
+}
