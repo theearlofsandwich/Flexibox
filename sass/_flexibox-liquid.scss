@@ -27,7 +27,7 @@ img, embed, object, video {
   clear: none;
   /* Apparently this helps in IE */
   display: inline;
-  overflow-x: hidden;
+  //overflow-x: hidden;
   /* And this helps Firefox when a column has no content */
   min-height: 1px;
 }
@@ -46,17 +46,18 @@ img, embed, object, video {
 }
 
 @mixin fbox-clearfix(){
-  *zoom: 1;
-  display: block;
+  &:before,
+  &:after {
+      content:"";
+      display:table;
+  }
 
   &:after {
-    content: "\0020";
-    display: block;
-    height: 0;
-    clear: both;
-    overflow: hidden;
-    visibility: hidden;
+      clear:both;
   }
+
+/* For IE 6/7 (trigger hasLayout) */
+  *zoom:1;
 }
 
 .clearfix {
